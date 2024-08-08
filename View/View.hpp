@@ -1,7 +1,7 @@
 /*************************************************************************
-View.hpp
-包含界面类的头文件
-zheng-y23 2024-8-5
+【文件名】              View.hpp
+【功能模块和目的】       包含界面类的头文件
+【开发者及日期】         zheng-y23 2024-8-5
 *************************************************************************/
 
 #pragma once
@@ -11,10 +11,19 @@ zheng-y23 2024-8-5
 #include <string>
 
 /*************************************************************************
-View
-界面类
-无参数
-zheng-y23 2024-8-5
+【类名】                View
+【功能】                界面类
+【接口说明】             构建命令行用户界面，实现对控制器功能的调用、用户命令的读取和错误处理
+                        static View& GetInstance();
+                        void Start(Controller& controller);
+                        void LoadFile(Controller& controller);
+                        void SaveFile(Controller& controller);
+                        void LoadCommand();
+                        void ExecuteCommand(Controller& controller);
+                        void ExecuteDisplay(Controller& controller);
+                        void ExecuteEdit(Controller& controller);
+                        void DisplayUsage();
+【开发者及日期】         zheng-y23 2024-8-5
 *************************************************************************/
 class View {
 public:
