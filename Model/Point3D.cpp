@@ -1,103 +1,156 @@
 /*************************************************************************
-Point3D.cpp
-Point3D类的具体实现
-zheng-y23 2024-7-27
+【文件名】               Point3D.cpp
+【功能模块及目的】       Point3D类的具体实现
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 
 #include "Point3D.hpp"
 
 /*************************************************************************
-Point3D 
-默认构造函数
-无参数
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              Point3D 
+【函数功能】              默认构造函数
+【参数】                  无参数
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 Point3D::Point3D() {
     //空函数体
 }
 
 /*************************************************************************
-Point3D
-拷贝构造函数
-Point3D常引用Source
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              Point3D
+【函数功能】              拷贝构造函数
+【参数】                  Point3D常引用Source
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 Point3D::Point3D(const Point3D& Source) {
     SetComponent(Source.Component[0], Source.Component[1], Source.Component[2]);
+    m_ID = Source.ID;
 }
 
 /*************************************************************************
-~Point3D
-析构函数
-无参数
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              ~Point3D
+【函数功能】              析构函数
+【参数】                  无参数
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 Point3D::~Point3D() {
     //空函数体
 }
 
 /*************************************************************************
-operator=
-赋值运算符重载
-Point3D常引用Source
-赋值后对象
-zheng-y23 2024-7-27
+【函数名称】              operator=
+【函数功能】              赋值运算符重载
+【参数】                  Point3D常引用Source
+【返回值】                赋值后对象
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 Point3D& Point3D::operator= (const Point3D& Source) {
     if (this != &Source)
     {
         SetComponent(Source.Component[0], Source.Component[1], Source.Component[2]);
+        m_ID = Source.ID;
     }
     return *this;
 }
 
 /*************************************************************************
-SetX
-设置x坐标
-double类型x
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              operator==
+【函数功能】              等于运算符重载
+【参数】                  Point3D常引用Source
+【返回值】                两点是否相等
+【开发者及日期】          zheng-y23 2024-8-1
+*************************************************************************/
+bool Point3D::operator== (const Point3D& Source) {
+    bool b_IfEqual = 1;
+    for (int i = 0; i < 3; i++)
+    {
+        b_IfEqual *= (Vector<double, 3>::Component[i] == Source.Component[i]);
+    }
+    return b_IfEqual;
+}
+
+/*************************************************************************
+【函数名称】              operator!=
+【函数功能】              不等于运算符重载
+【参数】                  Point3D常引用Source
+【返回值】                两点是否相等
+【开发者及日期】          zheng-y23 2024-8-1
+*************************************************************************/
+bool Point3D::operator!= (const Point3D& Source) {
+    return 1 - operator==(Source);
+}
+
+/*************************************************************************
+【函数名称】              operator<<
+【函数功能】              流运算符重载
+【参数】                  输出流引用out和Point3D常引用Point
+【返回值】                输出流
+【开发者及日期】          zheng-y23 2024-8-6
+*************************************************************************/
+std::ostream& operator<< (std::ostream& out, const Point3D& Point) {
+    out << "point " << Point.ID << " (";
+    out << Point.X << " " << Point.Y << " " << Point.Z << ")";
+    return out;
+}
+
+/*************************************************************************
+【函数名称】              SetID
+【函数功能】              设置点的编号
+【参数】                  编号ID
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-8-1
+*************************************************************************/
+void Point3D::SetID(int ID) {
+    m_ID = ID;
+}
+
+/*************************************************************************
+【函数名称】              SetX
+【函数功能】              设置x坐标
+【参数】                  double类型x
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 void Point3D::SetX(double x) {
-    const double Comp[] = {x, Component[1], Component[2]};
-    Vector<double, 3>::SetComponent(Comp);
+    const double dComp[] = {x, Component[1], Component[2]};
+    Vector<double, 3>::SetComponent(dComp);
 }
 
 /*************************************************************************
-SetY
-设置y坐标
-double类型y
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              SetY
+【函数功能】              设置y坐标
+【参数】                  double类型y
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 void Point3D::SetY(double y) {
-    const double Comp[] = {Component[0], y, Component[2]};
-    Vector<double, 3>::SetComponent(Comp);
+    const double dComp[] = {Component[0], y, Component[2]};
+    Vector<double, 3>::SetComponent(dComp);
 }
 
 /*************************************************************************
-SetZ
-设置z坐标
-double类型z
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              SetZ
+【函数功能】              设置z坐标
+【参数】                  double类型z
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 void Point3D::SetZ(double z) {
-    const double Comp[] = {Component[0], Component[1], z};
-    Vector<double, 3>::SetComponent(Comp);
+    const double dComp[] = {Component[0], Component[1], z};
+    Vector<double, 3>::SetComponent(dComp);
 }
 
 /*************************************************************************
-SetComponent
-设置坐标
-double类型x, y, z
-无返回值
-zheng-y23 2024-7-27
+【函数名称】              SetComponent
+【函数功能】              设置坐标
+【参数】                  double类型x, y, z
+【返回值】                无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 void Point3D::SetComponent(double x, double y, double z) {
-    const double Comp[] = {x, y, z};
-    Vector<double, 3>::SetComponent(Comp);
+    const double dComp[] = {x, y, z};
+    Vector<double, 3>::SetComponent(dComp);
 }

@@ -1,7 +1,7 @@
 /*************************************************************************
-Vector.hpp
-实现不同维数、类型的向量类模版
-zheng-y23 2024-7-26
+【文件名】             Vector.hpp
+【功能模块和目的】      实现不同维数、类型的向量类模版
+【开发者及日期】        zheng-y23 2024-7-26
 *************************************************************************/
 
 #pragma once
@@ -10,10 +10,21 @@ zheng-y23 2024-7-26
 #include <cmath>
 
 /*************************************************************************
-Vector<T, N>
-N维T类型的向量类模版
-维数N和类型T
-zheng-y23 2024-7-26
+【类名】               Vector<T, N>
+【功能】               N维T类型的向量类模版
+【接口说明】           实现向量的加、减、乘、除、求外积、求范数
+                      Vector& operator+ (const Vector& Source) const;
+                      Vector& operator+= (const Vector& Source) const;
+                      Vector& operator- (const Vector& Source) const;
+                      Vector& operator-= (const Vector& Source) const;
+                      Vector& operator* (const Vector& Source) const;
+                      Vector& operator*= (const Vector& Source) const;
+                      T L0() const;
+                      T L1() const;
+                      T L2() const;
+                      T Lp(unsigned int p) const;
+                      T Lmax() const;
+【开发者及日期】        zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 class Vector {
@@ -63,11 +74,11 @@ public:
 };
 
 /*************************************************************************
-Vector
-默认构造函数
-无参数
-无返回值
-zheng-y23 2024-7-26
+【函数接口】              Vector
+【函数功能】              默认构造函数
+【参数】                  无参数
+【返回值】                无返回值
+【开发者及日期】           zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>::Vector() {
@@ -75,11 +86,11 @@ Vector<T, N>::Vector() {
 }
 
 /*************************************************************************
-Vector
-拷贝构造函数
-Vector常引用Source
-无返回值
-zheng-y23 2024-7-26
+【函数接口】             Vector
+【函数功能】             拷贝构造函数
+【参数】                 Vector常引用Source
+【返回值】               无返回值
+【开发者及日期】          zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>::Vector(const Vector& Source) {
@@ -90,11 +101,11 @@ Vector<T, N>::Vector(const Vector& Source) {
 }
 
 /*************************************************************************
-~Vector
-析构函数
-无参数
-无返回值
-zheng-y23 2024-7-26
+【函数名称】             ~Vector
+【函数功能】             析构函数
+【参数】                 无参数
+【返回值】               无返回值
+【开发者及日期】          zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>::~Vector() {
@@ -102,11 +113,11 @@ Vector<T, N>::~Vector() {
 }
 
 /*************************************************************************
-SetComponent
-设置坐标
-坐标数组
-无返回值
-zheng-y23 2024-7-27
+【函数名称】             SetComponent
+【函数功能】             设置坐标
+【参数】                 坐标数组
+【返回值】               无返回值
+【开发者及日期】          zheng-y23 2024-7-27
 *************************************************************************/
 template<class T, size_t N>
 void Vector<T, N>::SetComponent(const T* Components) {
@@ -117,11 +128,11 @@ void Vector<T, N>::SetComponent(const T* Components) {
 }
 
 /*************************************************************************
-operator=
-赋值运算符重载
-Vector常引用Source
-赋值后对象
-zheng-y23 2024-7-26
+【函数名称】            operator=
+【函数功能】            赋值运算符重载
+【参数】                Vector常引用Source
+【返回值】              赋值后对象
+【开发者及日期】         zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator= (const Vector& Source) {
@@ -135,11 +146,11 @@ Vector<T, N>& Vector<T, N>::operator= (const Vector& Source) {
 }
 
 /*************************************************************************
-operator+
-加法运算符重载
-Vector常引用Source
-相加后对象
-zheng-y23 2024-7-26
+【函数名称】           operator+
+【函数功能】           加法运算符重载
+【参数】              Vector常引用Source
+【返回值】             相加后对象
+【开发者及日期】        zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator+ (const Vector& Source) const {
@@ -151,11 +162,11 @@ Vector<T, N>& Vector<T, N>::operator+ (const Vector& Source) const {
 }
 
 /*************************************************************************
-operator+=
-加等于运算符重载
-Vector常引用Source
-相加后对象
-zheng-y23 2024-7-26
+【函数名称】           operator+=
+【函数功能】           加等于运算符重载
+【参数】               Vector常引用Source
+【返回值】             相加后对象
+【开发者及日期】        zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator+= (const Vector& Source) const {
@@ -167,11 +178,11 @@ Vector<T, N>& Vector<T, N>::operator+= (const Vector& Source) const {
 }
 
 /*************************************************************************
-operator-
-减法运算符重载
-Vector常引用Source
-相减后对象
-zheng-y23 2024-7-26
+【函数名称】            operator-
+【函数功能】            减法运算符重载
+【参数】                Vector常引用Source
+【返回值】              相减后对象
+【开发者及日期】         zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator- (const Vector& Source) const {
@@ -183,11 +194,11 @@ Vector<T, N>& Vector<T, N>::operator- (const Vector& Source) const {
 }
 
 /*************************************************************************
-operator-=
-减等于运算符重载
-Vector常引用Source
-相减后对象
-zheng-y23 2024-7-26
+【函数名称】           operator-=
+【函数功能】           减等于运算符重载
+【参数】               Vector常引用Source
+【返回值】             相减后对象
+【开发者及日期】        zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator-= (const Vector& Source) const {
@@ -199,11 +210,11 @@ Vector<T, N>& Vector<T, N>::operator-= (const Vector& Source) const {
 }
 
 /*************************************************************************
-operator[]
-下标运算符重载
-下标
-数组中下标对应的数据
-zheng-y23 2024-7-26
+【函数名称】          operator[]
+【函数功能】          下标运算符重载
+【参数】              下标
+【返回值】            数组中下标对应的数据
+【开发者及日期】       zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::operator[] (size_t Index) const {
@@ -211,11 +222,11 @@ T Vector<T, N>::operator[] (size_t Index) const {
 }
 
 /*************************************************************************
-operator*
-计算向量外积
-Vector常引用Source
-向量外积
-zheng-y23 2024-7-26
+【函数名称】           operator*
+【函数功能】           计算向量外积
+【参数】               Vector常引用Source
+【返回值】             向量外积
+【开发者及日期】        zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator* (const Vector& Source) const {
@@ -223,11 +234,11 @@ Vector<T, N>& Vector<T, N>::operator* (const Vector& Source) const {
 }
 
 /*************************************************************************
-operator*=
-计算向量外积
-Vector常引用Source
-向量外积
-zheng-y23 2024-7-26
+【函数名称】            operator*=
+【函数功能】            计算向量外积
+【参数】                Vector常引用Source
+【返回值】              向量外积
+【开发者及日期】         zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator*= (const Vector& Source) const {
@@ -235,11 +246,11 @@ Vector<T, N>& Vector<T, N>::operator*= (const Vector& Source) const {
 }
 
 /*************************************************************************
-operator*
-计算向量数乘
-T类型Source
-数乘后的向量
-zheng-y23 2024-7-26
+【函数名称】             operator*
+【函数功能】             计算向量数乘
+【参数】                 T类型Source
+【返回值】               数乘后的向量
+【开发者及名称】         zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::operator* (T Source) const {
@@ -251,77 +262,77 @@ Vector<T, N>& Vector<T, N>::operator* (T Source) const {
 }
 
 /*************************************************************************
-L0
-计算向量的0-范数
-无参数
-向量的0-范数
-zheng-y23 2024-7-26
+【函数名称】              L0
+【函数功能】              计算向量的0-范数
+【参数】                  无参数
+【返回值】                向量的0-范数
+【开发者及日期】           zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::L0() const {
-    T Result0 = 0;
+    T t_Result0 = 0;
     if (m_Component[0] != 0)
     {
-        Result0 += 1;
+        t_Result0 += 1;
     }
     for (int i = 1; i < N; i++) 
     {
-        int flag = 0;
+        int i_flag = 0;
         for (int j = 0; j < i; j++)
         {
             if (m_Component[j] == m_Component[i])
             {
-                flag = 0;
+                i_flag = 0;
             }
         }
-        if (flag == 1 && m_Component[i] != 0)
+        if (i_flag == 1 && m_Component[i] != 0)
         {
-            Result0 += 1;
+            t_Result0 += 1;
         }
     }
-    return Result0;
+    return t_Result0;
 }
 
 /*************************************************************************
-L1
-计算向量的1-范数
-无参数
-向量的1-范数
-zheng-y23 2024-7-26
+【函数名称】                L1
+【函数功能】                计算向量的1-范数
+【参数】                    无参数
+【返回值】                  向量的1-范数
+【开发者及日期】             zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::L1() const {
-    T Result1 = 0;
+    T t_Result1 = 0;
     for (int i = 0; i < N; i++)
     {
-        Result1 += std::abs(m_Component[i]);
+        t_Result1 += std::abs(m_Component[i]);
     }
-    return Result1;
+    return t_Result1;
 }
 
 /*************************************************************************
-L2
-计算向量的2-范数
-无参数
-向量的2-范数
-zheng-y23 2024-7-26
+【函数名称】                 L2
+【函数功能】                 计算向量的2-范数
+【参数】                     无参数
+【返回值】                   向量的2-范数
+【开发者及日期】              zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::L2() const {
-    T Result2 = 0;
+    T t_Result2 = 0;
     for (int i = 0; i < N; i++)
     {
-        Result2 += pow(m_Component[i], 2);
+        t_Result2 += pow(m_Component[i], 2);
     }
-    return sqrt(Result2);
+    return sqrt(t_Result2);
 }
 
 /*************************************************************************
-Lp
-计算向量的p-范数
-无参数
-向量的p-范数
-zheng-y23 2024-7-26
+【函数名称】                  Lp
+【函数功能】                  计算向量的p-范数
+【参数】                     无参数
+【返回值】                    向量的p-范数
+【开发者及日期】              zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::Lp(unsigned int p) const {
@@ -329,48 +340,48 @@ T Vector<T, N>::Lp(unsigned int p) const {
 }
 
 /*************************************************************************
-Lmax
-计算向量的无穷范数
-无参数
-向量的无穷范数
-zheng-y23 2024-7-26
+【函数名称】                  Lmax
+【函数功能】                  计算向量的无穷范数
+【参数】                      无参数
+【返回值】                    向量的无穷范数
+【开发者及日期】              zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::Lmax() const {
-    T ResultMax = 0;
+    T t_ResultMax = 0;
     for (int i = 0; i < N; i++)
     {
-        if (ResultMax < std::abs(m_Component[i]))
+        if (t_ResultMax < std::abs(m_Component[i]))
         {
-            ResultMax = m_Component[i];
+            t_ResultMax = m_Component[i];
         }
     }
-    return ResultMax;
+    return t_ResultMax;
 }
 
 /*************************************************************************
-InnerL
-计算向量的p-范数
-整型p
-向量的p-范数
-zheng-y23 2024-7-26
+【函数名称】                   InnerL
+【函数功能】                   计算向量的p-范数
+【参数】                       整型p
+【返回值】                     向量的p-范数
+【开发者及日期】                zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::InnerL(unsigned int p) const {
-    T Result = 0;
+    T t_Result = 0;
     for (int i = 0; i < N; i++)
     {
-        Result += pow(std::abs(m_Component[i]), p);
+        t_Result += pow(std::abs(m_Component[i]), p);
     }
-    return pow(Result, 1 / p);
+    return t_pow(Result, 1 / p);
 }
 
 /*************************************************************************
-CrossProduct
-计算向量的外积
-Vector常引用Source
-向量的外积
-zheng-y23 2024-7-26
+【函数名称】                   CrossProduct
+【函数功能】                   计算向量的外积
+【参数】                       Vector常引用Source
+【返回值】                     向量的外积
+【开发者及日期】               zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N>& Vector<T, N>::CrossProduct(const Vector& Source) {
@@ -385,11 +396,11 @@ Vector<T, N>& Vector<T, N>::CrossProduct(const Vector& Source) {
 }
 
 /*************************************************************************
-InnerCrossProduct
-计算向量的外积（虚函数，需要重载）
-Vector常引用Source
-向量的外积
-zheng-y23 2024-7-26
+【函数名称】                  InnerCrossProduct
+【函数参数】                  计算向量的外积（虚函数，需要重载）
+【参数】                      Vector常引用Source
+【返回值】                    向量的外积
+【开发者及日期】               zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 Vector<T, N> Vector<T, N>::InnerCrossProduct(const Vector& Source) {
@@ -398,53 +409,53 @@ Vector<T, N> Vector<T, N>::InnerCrossProduct(const Vector& Source) {
 }
 
 /*************************************************************************
-operator==
-判断向量是否相等
-Vector常引用Source
-向量是否相等
-zheng-y23 2024-7-26
+【函数名称】                  operator==
+【函数功能】                  判断向量是否相等
+【参数】                      Vector常引用Source
+【返回值】                    向量是否相等
+【开发者及日期】              zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 bool Vector<T, N>::operator== (const Vector& Source) const {
-    bool Result = 1;
+    bool b_Result = 1;
     for (int i = 0; i < N; i++)
     {
         if (m_Component[i] != Source.Component[i])
         {
-            Result *= 0;
+            b_Result *= 0;
             break;
         }
     }
-    return Result;
+    return b_Result;
 }
 
 /*************************************************************************
-operator!=
-判断向量是否不等
-Vector常引用Source
-向量是否不等
-zheng-y23 2024-7-26
+【函数名称】                 operator!=
+【函数功能】                判断向量是否不等
+【参数】                    Vector常引用Source
+【返回值】                  向量是否不等
+【开发者及日期】             zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 bool Vector<T, N>::operator!= (const Vector& Source) const {
-    bool Result = 1;
+    bool b_Result = 1;
     for (int i = 0; i < N; i++)
     {
         if (m_Component[i] == Source.Component[i])
         {
-            Result *= 0;
+            b_Result *= 0;
             break;
         }
     }
-    return Result;
+    return b_Result;
 }
 
 /*************************************************************************
-Module
-求向量的模（也即2-范数）
-无参数
-向量的模
-zheng-y23 2024-7-26
+【函数名称】                 Module
+【函数功能】                 求向量的模（也即2-范数）
+【参数】                    无参数
+【返回值】                   向量的模
+【开发者及日期】             zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
 T Vector<T, N>::Module() const {

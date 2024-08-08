@@ -1,7 +1,7 @@
 /*************************************************************************
-Set.hpp
-实现大小、类型可变的集合类模版
-zheng-y23 2024-7-27
+【文件名】                Set.hpp
+【功能模块和目的】         实现大小、类型可变的集合类模版
+【开发者及日期】           zheng-y23 2024-7-27
 *************************************************************************/
 
 #pragma once
@@ -10,10 +10,15 @@ zheng-y23 2024-7-27
 #include <iostream>
 
 /*************************************************************************
-Set
-集合类模版
-类型T
-zheng-y23 2024-7-27
+【类名】                   Set
+【功能】                   集合类模版
+【接口说明】               继承Group类，构建集合类模版，实现集合的添加、修改元素以及交并补运算
+                           virtual void AddElement(T element);
+                           virtual void SetELement(int Index, T element);
+                           Set Intersection(const Set& Source);
+                           Set Union(const Set& Source);
+                           Set Difference(const Set& Source);
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 class Set : public Group<T> {
@@ -37,11 +42,11 @@ public:
 };
 
 /*************************************************************************
-Set
-默认构造函数
-无参数
-无返回值
-zheng-y23 2024-7-27
+【函数名称】                Set
+【函数功能】                默认构造函数
+【参数】                    无参数
+【返回值】                  无返回值
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T>::Set() {
@@ -49,11 +54,11 @@ Set<T>::Set() {
 }
 
 /*************************************************************************
-Set
-拷贝构造函数
-Set类型常引用Source
-无返回值
-zheng-y23 2024-7-27
+【函数名称】                Set
+【函数功能】                拷贝构造函数
+【参数】                    Set类型常引用Source
+【返回值】                  无返回值
+【开发者及日期】            zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T>::Set(const Set& Source) : Group<T>(Source) {
@@ -61,11 +66,11 @@ Set<T>::Set(const Set& Source) : Group<T>(Source) {
 }
 
 /*************************************************************************
-~Set
-析构函数
-无参数
-无返回值
-zheng-y23 2024-7-27
+【函数名称】                ~Set
+【函数功能】                析构函数
+【参数】                    无参数
+【返回值】                  无返回值
+【开发者及日期】            zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T>::~Set() {
@@ -73,11 +78,11 @@ Set<T>::~Set() {
 }
 
 /*************************************************************************
-operator=
-赋值运算符重构
-Set类型常引用Source
-赋值后对象
-zheng-y23 2024-7-27
+【函数名称】                operator=
+【函数功能】                赋值运算符重构
+【参数】                    Set类型常引用Source
+【返回值】                  赋值后对象
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T>& Set<T>::operator= (const Set& Source) {
@@ -89,11 +94,11 @@ Set<T>& Set<T>::operator= (const Set& Source) {
 }
 
 /*************************************************************************
-operator[]
-下标运算符重构
-下标
-下标对应的元素
-zheng-y23 2024-7-27
+【函数名称】                 operator[]
+【函数功能】                下标运算符重构
+【参数】                    下标
+【返回值】                  下标对应的元素
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 T Set<T>::operator[] (int Index) const{
@@ -101,109 +106,105 @@ T Set<T>::operator[] (int Index) const{
 }
 
 /*************************************************************************
-AddElement
-添加元素（互不重复）
-要添加的元素
-无返回值
-zheng-y23 2024-7-27
+【函数名称】                 AddElement
+【函数功能】                添加元素（互不重复）
+【参数】                    要添加的元素
+【返回值】                  无返回值
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 void Set<T>::AddElement(T element) {
-    Group<T>::AddElement(element);
-    int Number = 0;
-    for (auto iter = Group<T>::Begin(); iter != Group<T>::End(); ++iter)
+    bool b_IfnExist = 1;
+    for (int i = 0; i < Group<T>::Size; i++)
     {
-        if (*iter == element)
+        if (Group<T>::operator[](i) == element)
         {
-            Number += 1;
+            b_IfnExist *= 0;
+            break;
         }
     }
-    if (Number == 2)
+    if (b_IfnExist == 1)
     {
-        Group<T>::DeleteElement(Group<T>::Size - 1);
+        Group<T>::AddElement(element);
     }
 }
 
 /*************************************************************************
-SetElement
-设置元素（互不重复）
-要设置的元素及其下标
-无返回值
-zheng-y23 2024-7-27
+【函数名称】                 SetElement
+【函数功能】                设置元素（互不重复）
+【参数】                    要设置的元素及其下标
+【返回值】                  无返回值
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 void Set<T>::SetELement(int Index, T element) {
-    Group<T>::SetElement(Index, element);
-    int Number = 0;
+    bool b_IfExist = 1;
     for (int i = 0; i < Group<T>::Size; i++)
-    {   
-        if (Group<T>::operator[](i) == element)
-        {
-            Number += 1;
-        }
-    }
-    if (Number == 2)
     {
-        Group<T>::DeleteElement(Index);
+        b_IfExist *= Group<T>::operator[](i) == element;
+    }
+    if (b_IfExist != 1)
+    {
+        Group<T>::SetElement(Index, element);
     }
 }
 
 /*************************************************************************
-Intersection
-求集合的交集
-集合Source
-返回两集合的交集
-zheng-y23 2024-7-27
+【函数名称】                 Intersection
+【函数功能】                求集合的交集
+【参数】                    集合Source
+【返回值】                  返回两集合的交集
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T> Set<T>::Intersection(const Set& Source) {
-    Set<T> Result;
+    Set<T> s_Result;
     for (int i = 0; i < Group<T>::Size; i++)
     {
         for (int j = 0; j < Source.Size; j++)
         {
             if (operator[](i) == Source[j])
             {
-                Result.AddElement(Source[j]);
+                s_Result.AddElement(Source[j]);
             }
         }
     }
-    return Result;
+    return s_Result;
 }
 
 /*************************************************************************
-Union
-求集合的并集
-集合Source
-返回两集合的并集
-zheng-y23 2024-7-27
+【函数名称】                 Union
+【函数功能】                求集合的并集
+【参数】                    集合Source
+【返回值】                  返回两集合的并集
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T> Set<T>::Union(const Set& Source) {
-    Set<T> Result = Source;
+    Set<T> s_Result = Source;
     for (auto iter = Group<T>::Begin(); iter != Group<T>::End(); ++iter)
     {
-        Result.AddElement(*iter);
+        s_Result.AddElement(*iter);
     }
-    return Result;
+    return s_Result;
 }
 
 /*************************************************************************
-Difference
-求集合的差集
-集合Source
-返回两集合的差集
-zheng-y23 2024-7-27
+【函数名称】                 Difference
+【函数功能】                求集合的差集
+【参数】                    集合Source
+【返回值】                  返回两集合的差集
+【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
 Set<T> Set<T>::Difference(const Set& Source) {
-    Set<T> Result;
+    Set<T> s_Result;
     for (auto iter = Group<T>::Begin(); iter != Group<T>::End(); ++iter)
     {
         if (Find(*iter) != Group<T>::Size && Source.Find(*iter) == Source.Size)
         {
-            Result.AddElement(*iter);
+            s_Result.AddElement(*iter);
         }
     }
-    return Result;
+    return s_Result;
 }
