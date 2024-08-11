@@ -21,12 +21,12 @@
 Model模块包含了三维模型处理器的核心类，如Model3D, Face3D, Line3D, Point3D等，为了实现概念的抽象，增强核心类的泛用性，Model模块中还设计了Vector类模板、Group类模板等较为抽象的基类，这些核心类的具体关系为:
 
 - Model3D ***HAS-A*** Face3D, Line3D
-  - Face3D, Line3D ***HAS-A*** CountFixedSet(of Point3D)
-    - CountFixedSet ***IS-A*** Set
-    - Set ***IS-A*** Group
-    - Point3D ***IS-A*** Vector3D
-    - Vector3D ***IS-A*** Vector
-  - Face3D, Line3D ***IS-A*** Element3D
+- Face3D, Line3D ***HAS-A*** CountFixedSet(of Point3D)
+- CountFixedSet ***IS-A*** Set
+- Set ***IS-A*** Group
+- Point3D ***IS-A*** Vector3D
+- Vector3D ***IS-A*** Vector
+- Face3D, Line3D ***IS-A*** Element3D
 
 这些类既服务于大作业，又具有一定的泛用性。Vector、Vector3D是向量类，具有向量的坐标和运算特性；Point3D为Vector3D的派生类，隐藏了基类中关于向量运算的接口。Set类在“组”的基础上实现了集合的特性，而CountFixedSet则限制了元素个数不可改变，使得Face3D和Line3D更加安全。
 
