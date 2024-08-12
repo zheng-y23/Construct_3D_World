@@ -30,9 +30,9 @@ public:
     //赋值运算符重载
     Element3D& operator= (const Element3D& Source);
     //下标运算符重载
-    Point3D operator[] (int Index) const;
+    Point3D operator[] (unsigned int Index) const;
     //获取点的坐标
-    Point3D GetPoint(int Index) const;
+    Point3D GetPoint(unsigned int Index) const;
     //修改点的坐标
     void SetPoint(int ID, Point3D Point);
     //求面积、长度（派生类中重载）

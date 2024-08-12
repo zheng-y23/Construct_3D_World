@@ -103,7 +103,7 @@ Model3D& Model3D::operator= (const Model3D& Source) {
 【返回值】                下标对应的线段
 【开发者及日期】          zheng-y23 2024-7-31
 *************************************************************************/
-Line3D Model3D::GetLine(int Index) const {
+Line3D Model3D::GetLine(unsigned int Index) const {
     if (Index >= m_Line.size())
     {
         throw std::out_of_range("Index out of range");
@@ -252,7 +252,7 @@ void Model3D::DeleteLine(int ID) {
 【返回值】                下标对应的平面
 【开发者及日期】          zheng-y23 2024-7-31
 *************************************************************************/
-Face3D Model3D::GetFace(int Index) const {
+Face3D Model3D::GetFace(unsigned int Index) const {
     if (Index >= m_Face.size())
     {
         throw std::out_of_range("Index out of range");

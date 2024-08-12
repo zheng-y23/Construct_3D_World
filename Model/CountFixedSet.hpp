@@ -26,7 +26,7 @@ public:
     //赋值运算符重载
     CountFixedSet& operator= (const CountFixedSet& Source);
     //下标运算符重载
-    T operator[] (int Index) const;
+    T operator[] (unsigned int Index) const;
 private:
     unsigned int m_Size;
     //隐藏增加、减少元素的接口
@@ -113,6 +113,10 @@ CountFixedSet<T>& CountFixedSet<T>::operator= (const CountFixedSet& Source) {
 【开发者及日期】               zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-T CountFixedSet<T>::operator[] (int Index) const {
+T CountFixedSet<T>::operator[] (unsigned int Index) const {
+    if (Index >= m_Size)
+    {
+        throw std::out_of_range("Index out of range");
+    }
     return Set<T>::operator[](Index);
 }

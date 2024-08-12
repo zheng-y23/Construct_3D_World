@@ -44,7 +44,7 @@ public:
     Vector& operator- (const Vector& Source) const;
     Vector& operator-= (const Vector& Source) const;
     //下标运算符重载 
-    T operator[] (size_t Index) const;
+    T operator[] (unsigned int Index) const;
     //外积运算
     Vector& operator* (const Vector& Source) const;
     Vector& operator*= (const Vector& Source) const;
@@ -217,8 +217,15 @@ Vector<T, N>& Vector<T, N>::operator-= (const Vector& Source) const {
 【开发者及日期】       zheng-y23 2024-7-26
 *************************************************************************/
 template <class T, size_t N>
-T Vector<T, N>::operator[] (size_t Index) const {
-    return m_Component[Index];
+T Vector<T, N>::operator[] (unsigned int Index) const {
+    if (Index < m_Component.size())
+    {
+        return m_Component[Index];
+    }
+    else
+    {
+        throw std::out_of_range("Index out of range");
+    }
 }
 
 /*************************************************************************
@@ -373,7 +380,7 @@ T Vector<T, N>::InnerL(unsigned int p) const {
     {
         t_Result += pow(std::abs(m_Component[i]), p);
     }
-    return t_pow(Result, 1 / p);
+    return pow(t_Result, 1 / p);
 }
 
 /*************************************************************************

@@ -51,6 +51,22 @@ void OBJExporter::SaveModel(std::ofstream& File, const Model3D& Model) {
             }
         }
     }
+
+    //将点按序号排序
+    Point3D pTemp;
+    for (int i = 0; i < vPoints.size() - 1; i++)
+    {
+        for (int j = 0; j < vPoints.size() - i - 1; j++)
+        {
+            if (vPoints[j + 1].ID < vPoints[j].ID)
+            {
+                pTemp = vPoints[j];
+                vPoints[j] = vPoints[j + 1];
+                vPoints[j + 1] = pTemp;
+            }
+        }
+    }
+
     for (int i = 0; i < vPoints.size(); i++)
     {
         File << "v  " << std::fixed << std::setprecision(1) << vPoints[i].X << "  " << vPoints[i].Y << "  " << vPoints[i].Z << std::endl;

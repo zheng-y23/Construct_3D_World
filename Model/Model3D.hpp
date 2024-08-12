@@ -41,7 +41,7 @@ public:
     //赋值运算符重载
     Model3D& operator= (const Model3D& Source);
     //访问线段成员
-    Line3D GetLine(int Index) const;
+    Line3D GetLine(unsigned int Index) const;
     //添加线段
     void AddLine(const Line3D& Source);
     void AddLine(const Point3D& Point1, const Point3D& Point2);
@@ -50,7 +50,7 @@ public:
     //删除线段
     void DeleteLine(int ID);
     //获取面成员
-    Face3D GetFace(int Index) const;
+    Face3D GetFace(unsigned int Index) const;
     //添加面
     void AddFace(const Face3D& Source);
     void AddFace(const Point3D& Point1, const Point3D& Point2, const Point3D& Point3);

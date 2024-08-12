@@ -31,14 +31,14 @@ public:
     //赋值运算符重载
     Group& operator= (const Group& Source);
     //下标运算符重载
-    T operator[] (int Index) const;
+    T operator[] (unsigned int Index) const;
     //添加、删除、修改元素（虚函数）
     virtual void AddElement(T element);
     void DeleteElement(T element);
-    void DeleteElement(int Index);
-    virtual void SetElement(int Index, T element);
+    void DeleteElement(unsigned int Index);
+    virtual void SetElement(unsigned int Index, T element);
     //查找元素并返回下标
-    size_t Find(T element);
+    unsigned int Find(T element);
 private:
     std::vector<T> m_Group;
     unsigned int m_Size {0};
@@ -119,7 +119,11 @@ Group<T>& Group<T>::operator= (const Group& Source) {
 【开发者及日期】            zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-T Group<T>::operator[] (int Index) const {
+T Group<T>::operator[] (unsigned int Index) const {
+    if (Index >= m_Group.size())
+    {
+        throw std::out_of_range("Index out of range");
+    }
     return m_Group[Index];
 }
 
@@ -164,7 +168,11 @@ void Group<T>::DeleteElement(T element) {
 【开发者及日期】            zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-void Group<T>::DeleteElement(int Index) {
+void Group<T>::DeleteElement(unsigned int Index) {
+    if (Index >= m_Group.size())
+    {
+        throw std::out_of_range("Index out of range");
+    }
     m_Group.erase(m_Group.begin() + Index);
     m_Size -= 1;
 }
@@ -177,10 +185,14 @@ void Group<T>::DeleteElement(int Index) {
 【开发者及日期】            zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-void Group<T>::SetElement(int Index, T element) {
+void Group<T>::SetElement(unsigned int Index, T element) {
     if (Index < m_Size)
     {
         m_Group[Index] = element;
+    }
+    else
+    {
+        throw std::out_of_range("Index out of range");
     }
 }
 
@@ -192,8 +204,8 @@ void Group<T>::SetElement(int Index, T element) {
 【开发者及日期】            zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-size_t Group<T>::Find(T element) {
-    size_t Index = Size;
+unsigned int Group<T>::Find(T element) {
+    unsigned int Index = Size;
     for (int i = 0; i < Size; i++)
     {
         if (m_Group[i] == element)

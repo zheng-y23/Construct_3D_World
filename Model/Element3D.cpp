@@ -81,7 +81,11 @@ Element3D& Element3D::operator= (const Element3D& Source) {
 【返回值】             下标对应的点
 【开发者及日期】        zheng-y23 2024-7-31
 *************************************************************************/
-Point3D Element3D::operator[] (int Index) const {
+Point3D Element3D::operator[] (unsigned int Index) const {
+    if (Index >= m_Size)
+    {
+        throw std::out_of_range("Index out of range");
+    }
     return GetPoint(Index);
 }
 
@@ -92,7 +96,7 @@ Point3D Element3D::operator[] (int Index) const {
 【返回值】             下标对应的点
 【开发者及日期】        zheng-y23 2024-7-28
 *************************************************************************/
-Point3D Element3D::GetPoint(int Index) const {
+Point3D Element3D::GetPoint(unsigned int Index) const {
     if (Index < m_Points.Size)
     {
         return m_Points[Index];
@@ -111,13 +115,17 @@ Point3D Element3D::GetPoint(int Index) const {
 【开发者及日期】        zheng-y23 2024-8-1
 *************************************************************************/
 void Element3D::SetPoint(int Id, Point3D Point) {
-    int Index;
-    for (Index = 0; Index < m_Points.Size; Index++)
+    int iflag = 0;
+    for (int Index = 0; Index < m_Points.Size; Index++)
     {
         if (operator[](Index).ID == Id)
         {
-            break;
+            m_Points.SetELement(Index, Point);
+            iflag = 1;
         }
     }
-    m_Points.SetELement(Index, Point);
+    if (iflag == 0)
+    {
+        throw std::out_of_range("ID out of range");
+    }
 }

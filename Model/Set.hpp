@@ -31,14 +31,18 @@ public:
     //赋值运算符重载
     Set& operator= (const Set& Source);
     //下标运算符重载
-    T operator[] (int Index) const;
+    T operator[] (unsigned int Index) const;
     //添加、修改元素
     virtual void AddElement(T element);
-    virtual void SetELement(int Index, T element);
+    virtual void SetELement(unsigned int Index, T element);
     //求集合的交集、并集、差集
     Set Intersection(const Set& Source);
     Set Union(const Set& Source);
     Set Difference(const Set& Source);
+private:
+    unsigned int m_Size;
+public:
+    const unsigned int& Size {m_Size};
 };
 
 /*************************************************************************
@@ -50,7 +54,7 @@ public:
 *************************************************************************/
 template <class T>
 Set<T>::Set() {
-    //空函数体
+    m_Size = 0;
 }
 
 /*************************************************************************
@@ -62,7 +66,7 @@ Set<T>::Set() {
 *************************************************************************/
 template <class T>
 Set<T>::Set(const Set& Source) : Group<T>(Source) {
-    //空函数体
+    m_Size = Source.Size;
 }
 
 /*************************************************************************
@@ -89,6 +93,7 @@ Set<T>& Set<T>::operator= (const Set& Source) {
     if (this != &Source)
     {
         Group<T>::operator= (Source);
+        m_Size = Source.Size;
     }
     return *this;
 }
@@ -101,7 +106,11 @@ Set<T>& Set<T>::operator= (const Set& Source) {
 【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-T Set<T>::operator[] (int Index) const{
+T Set<T>::operator[] (unsigned int Index) const{
+    if (Index >= m_Size)
+    {
+        throw std::out_of_range("Index out of range");
+    }
     return Group<T>::operator[](Index);
 }
 
@@ -115,7 +124,7 @@ T Set<T>::operator[] (int Index) const{
 template <class T>
 void Set<T>::AddElement(T element) {
     bool b_IfnExist = 1;
-    for (int i = 0; i < Group<T>::Size; i++)
+    for (int i = 0; i < m_Size; i++)
     {
         if (Group<T>::operator[](i) == element)
         {
@@ -126,6 +135,7 @@ void Set<T>::AddElement(T element) {
     if (b_IfnExist == 1)
     {
         Group<T>::AddElement(element);
+        m_Size += 1;
     }
 }
 
@@ -137,11 +147,11 @@ void Set<T>::AddElement(T element) {
 【开发者及日期】             zheng-y23 2024-7-27
 *************************************************************************/
 template <class T>
-void Set<T>::SetELement(int Index, T element) {
+void Set<T>::SetELement(unsigned int Index, T element) {
     bool b_IfExist = 1;
-    for (int i = 0; i < Group<T>::Size; i++)
+    for (int i = 0; i < m_Size; i++)
     {
-        b_IfExist *= Group<T>::operator[](i) == element;
+        b_IfExist *= operator[](i) == element;
     }
     if (b_IfExist != 1)
     {
@@ -159,7 +169,7 @@ void Set<T>::SetELement(int Index, T element) {
 template <class T>
 Set<T> Set<T>::Intersection(const Set& Source) {
     Set<T> s_Result;
-    for (int i = 0; i < Group<T>::Size; i++)
+    for (int i = 0; i < m_Size; i++)
     {
         for (int j = 0; j < Source.Size; j++)
         {
@@ -182,9 +192,9 @@ Set<T> Set<T>::Intersection(const Set& Source) {
 template <class T>
 Set<T> Set<T>::Union(const Set& Source) {
     Set<T> s_Result = Source;
-    for (auto iter = Group<T>::Begin(); iter != Group<T>::End(); ++iter)
+    for (int i = 0; i < Group<T>::Size; i++)
     {
-        s_Result.AddElement(*iter);
+        s_Result.AddElement(operator[](i));
     }
     return s_Result;
 }
@@ -199,11 +209,11 @@ Set<T> Set<T>::Union(const Set& Source) {
 template <class T>
 Set<T> Set<T>::Difference(const Set& Source) {
     Set<T> s_Result;
-    for (auto iter = Group<T>::Begin(); iter != Group<T>::End(); ++iter)
+    for (int i = 0; i < m_Size; i++)
     {
-        if (Find(*iter) != Group<T>::Size && Source.Find(*iter) == Source.Size)
+        if (Group<T>::Find(operator[](i)) != Group<T>::Size && Source.Find(operator[](i)) == Source.Size)
         {
-            s_Result.AddElement(*iter);
+            s_Result.AddElement(operator[](i));
         }
     }
     return s_Result;

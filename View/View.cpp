@@ -57,20 +57,20 @@ void View::Start(Controller& controller) {
 *************************************************************************/
 void View::LoadFile(Controller& controller) {
     std::cout << "> Please enter the FILE PATH: ";
-    std::string FilePath;
-    std::getline(std::cin, FilePath);
-    if (FilePath == "q")
+    std::string sFilePath;
+    std::getline(std::cin, sFilePath);
+    if (sFilePath == "q")
     {
         exit(0);
     }
-    Controller::RES Result = controller.ReadModel(FilePath);
-    if (Result == Controller::RES::READ_FILE_FAILURE)
+    Controller::RES rResult = controller.ReadModel(sFilePath);
+    if (rResult == Controller::RES::READ_FILE_FAILURE)
     {
-        while(controller.ReadModel(FilePath) != Controller::RES::DONE)
+        while(controller.ReadModel(sFilePath) != Controller::RES::DONE)
         {
             std::cout << "> Invalid FILE PATH! Please enter again: ";
-            std::getline(std::cin, FilePath);
-            if (FilePath == "q")
+            std::getline(std::cin, sFilePath);
+            if (sFilePath == "q")
             {
                 exit(0);
             }
@@ -87,28 +87,28 @@ void View::LoadFile(Controller& controller) {
 【开发者及日期】         zheng-y23 2024-8-6
 *************************************************************************/
 void View::SaveFile(Controller& controller) {
-    std::string IfSave;
+    std::string sIfSave;
     std::cout << "> Do you want to SAVE the changes to the model? (enter y/n) ";
-    std::cin >> IfSave;
-    if (IfSave == "y")
+    std::cin >> sIfSave;
+    if (sIfSave == "y")
     {
-        std::string Path;
+        std::string sPath;
         std::cout << "> Where would you like to save (FILE PATH):  ";
-        std::cin >> Path;
-        Controller::RES Result = controller.WriteModel(Path);
-        if (Result == Controller::RES::DONE)
+        std::cin >> sPath;
+        Controller::RES rResult = controller.WriteModel(sPath);
+        if (rResult == Controller::RES::DONE)
         {
             std::cout << "> Done." << std::endl;
             std::cout << "====================================================SEE YOU NEXT TIME================================================================" << std::endl;
             exit(0);
         }
-        else if (Result == Controller::RES::WRITE_FILE_FAILURE)
+        else if (rResult == Controller::RES::WRITE_FILE_FAILURE)
         {
             std::cout << "[Error] INVALID FILE PATH" << std::endl;
             return;
         }
     }
-    else if (IfSave == "n")
+    else if (sIfSave == "n")
     {
         std::cout << "====================================================SEE YOU NEXT TIME================================================================" << std::endl;
         exit(0);
@@ -191,15 +191,15 @@ void View::ExecuteCommand(Controller& controller) {
 【开发者及日期】         zheng-y23 2024-8-6
 *************************************************************************/
 void View::ExecuteDisplay(Controller& controller) {
-    std::stringstream command(Command);
-    std::string type;
-    int ID;
+    std::stringstream ssCommand(Command);
+    std::string sType;
+    int iID;
     Line3D Line;
     Face3D Face;
-    Controller::CountOfElements count = controller.GetCount();
+    Controller::CountOfElements cCount = controller.GetCount();
 
-    command >> type;
-    if (command.fail() == 1)
+    ssCommand >> sType;
+    if (ssCommand.fail() == 1)
     {
         std::cout << "[Error] INVALID COMMAND (enter 'h' for help)" << std::endl;
         return; 
@@ -209,12 +209,12 @@ void View::ExecuteDisplay(Controller& controller) {
     {   
         size_t LineID;
         std::cout << "[Display] ";
-        if (count.CountofLines == 0)
+        if (cCount.CountofLines == 0)
         {
             std::cout << "NO LINES IN MODEL" << std::endl;
             return;
         }
-        for (int i = 0; i < count.CountofLines; i++)
+        for (int i = 0; i < cCount.CountofLines; i++)
         {
             controller.GetLineID(i, &LineID);
             controller.GetLine(LineID, &Line);
@@ -229,12 +229,12 @@ void View::ExecuteDisplay(Controller& controller) {
     {
         size_t FaceID;
         std::cout << "[Display] ";
-        if (count.CountofFaces == 0)
+        if (cCount.CountofFaces == 0)
         {
             std::cout << "NO FACES IN MODEL" << std::endl;
             return;
         }
-        for (int i = 0; i < count.CountofFaces; i++)
+        for (int i = 0; i < cCount.CountofFaces; i++)
         {
             controller.GetFaceID(i, &FaceID);
             controller.GetFace(FaceID, &Face);
@@ -247,18 +247,18 @@ void View::ExecuteDisplay(Controller& controller) {
     }
     else if (Command[0] == 'l')
     {
-        command.str(Command);
-        command >> type >> ID;
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> iID;
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.GetLine(ID, &Line);
-        if (Result == Controller::RES::ID_OUT_OF_RANGE)
+        Controller::RES rResult = controller.GetLine(iID, &Line);
+        if (rResult == Controller::RES::ID_OUT_OF_RANGE)
         {
             std::cout << "[Error] ";
-            std::cout << "LINE " << ID << " DOES NOT EXIST" << std::endl;
+            std::cout << "LINE " << iID << " DOES NOT EXIST" << std::endl;
             return; 
         }
         std::cout << "[Display] ";
@@ -266,19 +266,18 @@ void View::ExecuteDisplay(Controller& controller) {
     }
     else if (Command[0] == 'f')
     {
-        command.str(Command);
-        command >> type >> ID;
-        bool IfExist = 0;
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> iID;
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.GetFace(ID, &Face);
-        if (Result == Controller::RES::ID_OUT_OF_RANGE)
+        Controller::RES rResult = controller.GetFace(iID, &Face);
+        if (rResult == Controller::RES::ID_OUT_OF_RANGE)
         {
             std::cout << "[Error] ";
-            std::cout << "FACE " << ID << " DOES NOT EXIST" << std::endl;
+            std::cout << "FACE " << iID << " DOES NOT EXIST" << std::endl;
             return;
         }
         std::cout << "[Display] ";
@@ -286,9 +285,9 @@ void View::ExecuteDisplay(Controller& controller) {
     }
     else if (Command == "i")
     {
-        Controller::CountOfElements count = controller.GetCount();
-        std::cout << "[Display] IN MODEL: " << count.CountofPoints << " points, " << count.CountofLines << " lines, " << count.CountofFaces << " faces," << std::endl;
-        std::cout << "          total length of lines: " << count.TotalLength << ", total area of faces: " << count.TotalArea << ", " << " Box Volume: " << count.BoxVolume << std::endl;
+        Controller::CountOfElements cCount = controller.GetCount();
+        std::cout << "[Display] IN MODEL: " << cCount.CountofPoints << " points, " << cCount.CountofLines << " lines, " << cCount.CountofFaces << " faces," << std::endl;
+        std::cout << "          total length of lines: " << cCount.TotalLength << ", total area of faces: " << cCount.TotalArea << ", " << " Box Volume: " << cCount.BoxVolume << std::endl;
     } 
 }
 
@@ -300,16 +299,16 @@ void View::ExecuteDisplay(Controller& controller) {
 【开发者及日期】         zheng-y23 2024-8-6
 *************************************************************************/
 void View::ExecuteEdit(Controller& controller) {
-    std::stringstream command(Command);
-    int ID;
-    int PointID;
-    double X[3];
-    double Y[3];
-    double Z[3];
-    std::string type;
+    std::stringstream ssCommand(Command);
+    int iID = 0;
+    int iPointID = 0;
+    double dX[3] = {0};
+    double dY[3] = {0};
+    double dZ[3] = {0};
+    std::string sType;
     try
     {
-        command >> type;
+        ssCommand >> sType;
     }
     catch (const std::exception& e)
     {
@@ -317,17 +316,17 @@ void View::ExecuteEdit(Controller& controller) {
         return;
     }
     
-    if (type == "slp")
+    if (sType == "slp")
     {
-        command.str(Command);
-        command >> type >> ID  >> PointID >> X[0] >> Y[0] >> Z[0];
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> iID  >> iPointID >> dX[0] >> dY[0] >> dZ[0];
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.SetLinePoint(ID, PointID, X[0], Y[0], Z[0]);
-        switch(Result)
+        Controller::RES rResult = controller.SetLinePoint(iID, iPointID, dX[0], dY[0], dZ[0]);
+        switch(rResult)
         {
             case Controller::RES::DONE:
             {
@@ -346,17 +345,17 @@ void View::ExecuteEdit(Controller& controller) {
             }
         }
     }
-    else if (type == "sfp")
+    else if (sType == "sfp")
     {
-        command.str(Command);
-        command >> type >> ID  >> PointID >> X[0] >> Y[0] >> Z[0];
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> iID  >> iPointID >> dX[0] >> dY[0] >> dZ[0];
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.SetFacePoint(ID, PointID, X[0], Y[0], Z[0]);
-        switch(Result)
+        Controller::RES rResult = controller.SetFacePoint(iID, iPointID, dX[0], dY[0], dZ[0]);
+        switch(rResult)
         {
             case Controller::RES::DONE:
             {
@@ -376,81 +375,81 @@ void View::ExecuteEdit(Controller& controller) {
         }
 
     }
-    else if (type == "al")
+    else if (sType == "al")
     {
-        command.str(Command);
-        command >> type >> X[0] >> Y[0] >> Z[0] >> X[1] >> Y[1] >> Z[1];
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> dX[0] >> dY[0] >> dZ[0] >> dX[1] >> dY[1] >> dZ[1];
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.AddLine(X, Y, Z);
-        if (Result == Controller::RES::DONE)
+        Controller::RES rResult = controller.AddLine(dX, dY, dZ);
+        if (rResult == Controller::RES::DONE)
         {
             std::cout << "[Edit] Done." << std::endl;
         }
-        else if (Result == Controller::RES::INVALID_COORDINATE)
+        else if (rResult == Controller::RES::INVALID_COORDINATE)
         {
             std::cout << "[Error] INVALID COORDINATE (IDENTICAL TO OTHER ELEMENTS)" << std::endl;
         }
     }
-    else if (type == "af")
+    else if (sType == "af")
     {
-        command.str(Command);
-        command >> type >> X[0] >> Y[0] >> Z[0] >> X[1] >> Y[1] >> Z[1] >> X[2] >> Y[2] >> Z[2];
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> dX[0] >> dY[0] >> dZ[0] >> dX[1] >> dY[1] >> dZ[1] >> dX[2] >> dY[2] >> dZ[2];
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.AddFace(X, Y, Z);
-        if (Result == Controller::RES::DONE)
+        Controller::RES rResult = controller.AddFace(dX, dY, dZ);
+        if (rResult == Controller::RES::DONE)
         {
             std::cout << "[Edit] Done." << std::endl;
         }
-        else if (Result == Controller::RES::INVALID_COORDINATE)
+        else if (rResult == Controller::RES::INVALID_COORDINATE)
         {
             std::cout << "[Error] INVALID COORDINATE (IDENTICAL TO OTHER ELEMENTS)" << std::endl;
         }
     }
-    else if (type == "dl")
+    else if (sType == "dl")
     {
-        command.str(Command);
-        command >> type >> ID;
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> iID;
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.DeleteLine(ID);
-        if (Result == Controller::RES::DONE)
+        Controller::RES rResult = controller.DeleteLine(iID);
+        if (rResult == Controller::RES::DONE)
         {
             std::cout << "[Edit] Done." << std::endl;
         }
-        else if (Result == Controller::RES::ID_OUT_OF_RANGE)
+        else if (rResult == Controller::RES::ID_OUT_OF_RANGE)
         {
-            std::cout << "[Error] LINE " << ID << " DOES NOT EXIST" << std::endl;
+            std::cout << "[Error] LINE " << iID << " DOES NOT EXIST" << std::endl;
             return;
         }
     }
-    else if (type == "df")
+    else if (sType == "df")
     {
-        command.str(Command);
-        command >> type >> ID;
-        if (command.fail() == 1)
+        ssCommand.str(Command);
+        ssCommand >> sType >> iID;
+        if (ssCommand.fail() == 1)
         {
             std::cout << "[Error] INVALID ARGUMENT" << std::endl;
             return;
         }
-        Controller::RES Result = controller.DeleteFace(ID);
-        if (Result == Controller::RES::DONE)
+        Controller::RES rResult = controller.DeleteFace(iID);
+        if (rResult == Controller::RES::DONE)
         {
             std::cout << "[Edit] Done." << std::endl;
         }
-        else if (Result == Controller::RES::ID_OUT_OF_RANGE)
+        else if (rResult == Controller::RES::ID_OUT_OF_RANGE)
         {
-            std::cout << "[Error] Face " << ID << " DOES NOT EXIST" << std::endl;
+            std::cout << "[Error] Face " << iID << " DOES NOT EXIST" << std::endl;
             return;
         }
     }
